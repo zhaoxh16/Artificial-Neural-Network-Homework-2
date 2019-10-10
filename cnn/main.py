@@ -68,7 +68,7 @@ def valid_epoch(model, sess, X, y): # Valid Process
     return acc, loss
 
 
-def inference(model, sess, X): # Test Process
+def inference(model, sess, X):  # Test Process
     return sess.run([model.pred_val], {model.x_: X})[0]
 
 
@@ -80,6 +80,11 @@ with tf.Session() as sess:
         X_val, y_val = X_train[40000:], y_train[40000:]
         X_train, y_train = X_train[:40000], y_train[:40000]
         cnn_model = Model()
+
+        writer = tf.summary.FileWriter('.')
+        writer.add_graph(tf.get_default_graph())
+        writer.flush()
+
         if tf.train.get_checkpoint_state(FLAGS.train_dir):
             cnn_model.saver.restore(sess, tf.train.latest_checkpoint(FLAGS.train_dir))
         else:
