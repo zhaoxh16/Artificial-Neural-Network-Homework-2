@@ -1,3 +1,4 @@
 cifar-10_data
 .vscode
 */__pycache__
+*/result

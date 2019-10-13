@@ -37,9 +37,9 @@ class Model:
             conv1 = tf.layers.Conv2D(64, kernel_size=[5, 5], padding='same', name='Conv1', trainable=True, _reuse=reuse)
             conv1_out = conv1(self.x_)
             # Your BN Layer: use batch_normalization_layer function
-            bn_1_out = batch_normalization_layer(conv1_out, "BN1", is_train)
+            # bn_1_out = batch_normalization_layer(conv1_out, "BN1", is_train)
             # Your Relu Layer
-            relu_1_out = tf.nn.relu(bn_1_out, name='Relu1')
+            relu_1_out = tf.nn.relu(conv1_out, name='Relu1')
             # Your Dropout Layer: use dropout_layer function
             dropout_1_out = dropout_layer(relu_1_out, FLAGS.drop_rate, "Dropout1", is_train=is_train)
             # Your MaxPool
@@ -49,9 +49,9 @@ class Model:
             conv2 = tf.layers.Conv2D(64, kernel_size=[5, 5], padding='same', name='Conv2', trainable=True, _reuse=reuse)
             conv2_out = conv2(maxpool_1_out)
             # Your BN Layer: use batch_normalization_layer function
-            bn_2_out = batch_normalization_layer(conv2_out, "BN2", is_train)
+            # bn_2_out = batch_normalization_layer(conv2_out, "BN2", is_train)
             # Your Relu Layer
-            relu_2_out = tf.nn.relu(bn_2_out, name="Relu2")
+            relu_2_out = tf.nn.relu(conv2_out, name="Relu2")
             # Your Dropout Layer: use dropout_layer function
             dropout_2_out = dropout_layer(relu_2_out, FLAGS.drop_rate, "Dropout2", is_train=is_train)
             # Your MaxPool
