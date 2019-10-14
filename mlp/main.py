@@ -95,6 +95,7 @@ with tf.Session() as sess:
 
         pre_losses = [1e18] * 3
         best_val_acc = 0.0
+        best_test_acc = 0.0
         train_loss_list = []
         val_loss_list = []
         test_loss_list = []
@@ -111,6 +112,7 @@ with tf.Session() as sess:
                 
             if val_acc >= best_val_acc:  # when valid_accuracy > best_valid_accuracy, save the model
                 best_val_acc = val_acc
+                best_test_acc = test_acc
                 best_epoch = epoch + 1
                 mlp_model.saver.save(sess, '%s/checkpoint' % FLAGS.train_dir, global_step=mlp_model.global_step)
 
@@ -125,6 +127,7 @@ with tf.Session() as sess:
             print("  best validation accuracy:      " + str(best_val_acc))
             print("  test loss:                     " + str(test_loss))
             print("  test accuracy:                 " + str(test_acc))
+            print("  best test accuracy:            " + str(best_test_acc))
             train_loss_list.append(train_loss)
             val_loss_list.append(val_loss)
             test_loss_list.append(test_loss)
@@ -157,7 +160,8 @@ with tf.Session() as sess:
                 "drop_rate": FLAGS.drop_rate,
                 "train_dir": FLAGS.train_dir,
                 "best_epoch": best_epoch,
-                "best_val_acc": best_val_acc
+                "best_val_acc": best_val_acc,
+                "best_test_acc": best_test_acc
             }
             f.write(str(info))
     else:
